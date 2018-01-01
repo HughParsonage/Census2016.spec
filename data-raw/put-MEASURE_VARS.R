@@ -11,11 +11,11 @@ metadatum <- function(class = "character",
   }
 
   list(class = class,
-       permitted_value = permitted_values)
+       permitted_values = permitted_values)
 }
 
 metadatum_logical <- function(has_na) {
-  if (is.na(has_na)) {
+  if (!missing(has_na) && is.na(has_na)) {
     metadatum(class = "logical",
               permitted_values = c(NA, FALSE, TRUE))
   } else {
@@ -35,6 +35,10 @@ MEASURE_VARS <-
                                               "75+",
                                               "75-84",
                                               "85+")),
+       "Age5yr" = metadatum(class = c("ordered", "factor"),
+                            permitted_values = c("15-19", "20-24", "25-29", "30-34",
+                                                 "35-39", "40-44", "45-49", "50-54", "55-59", "60-64", "65-69",
+                                                 "70-74", "75-79", "80-84", "85+")),
        "Age.min" = metadatum(class = "integer",
                              permitted_values = 0:100),
        "AgeStudent" = metadatum(class = c("ordered", "factor"),
@@ -93,13 +97,20 @@ MEASURE_VARS <-
                                         permitted_values = c(NA,
                                                             "Speaks English well or very well",
                                                             "Speaks English not well or not at all")),
-       "FamilyComposition" = metadatum(permitted_values = c("Blended family with no other children present",
+       "FamilyComposition" = metadatum(class = "character",
+                                       permitted_values = c("Blended family with no other children present",
                                                             "Blended family with other children present",
                                                             "Intact family with no other children present",
                                                             "Intact family with other children present",
                                                             "Other couple family with other children only",
                                                             "Step family with no other children present",
                                                             "Step family with other children present")),
+       "HouseholdComposition" = metadatum(class = "character",
+                                          permitted_values = c("Couple family with children",
+                                                               "Couple family with no children",
+                                                               "Group household", "Lone-person household",
+                                                               "One parent family with children",
+                                                               "Other family")),
        "FamilyHousehold" = metadatum_logical(),
        "FatherBornAus" = metadatum_logical(),
        "ForOtherChild" = metadatum_logical(),
@@ -133,7 +144,8 @@ MEASURE_VARS <-
        "Landlord" = metadatum(class = "character",
                               permitted_values = c(NA, "(Other)", "Co-op/church group etc", "Person not in same household",
                                                    "Real estate agent", "State or territory housing authority")),
-       "MaritalStatus" = metadatum(permitted_values = c("Married", "Not married", "Divorced", "Separated", "Widowed")),
+       "MaritalStatus" = metadatum(class = "character",
+                                   permitted_values = c("Married", "Not married", "Divorced", "Separated", "Widowed")),
        "MaxSchoolingCompleted" = metadatum(class = c("ordered", "factor"),
                                            permitted_values = c("Did not go to school",
                                                                 "Year 8 or below",
@@ -184,11 +196,14 @@ MEASURE_VARS <-
                                         permitted_values = 1:6),
        "Volunteer" = metadatum_logical(NA),
        "YearOfArrival.max" = metadatum(class = "integer",
-                                       permitted_values = c(NA, 2005L, 2010L, 2011L, 2012L, 2013L, 2014L, 2015L, 2016L,
-                                                            2000L, 1946L, 1955L, 1965L, 1975L, 1985L, 1995L, 2005L, 2010L, 1955L,
-                                                            1965L, 1975L, 1985L, 1995L)),
+                                       permitted_values = c(1946L, 1955L, 1965L, 1975L, 1985L, 1995L,
+                                                            2000L, 2005L, 2010L,
+                                                            2011L, 2012L, 2013L, 2014L, 2015L, 2016L)),
        "medianMortgageRepayment" = is.integer,
        "medianRent" = is.integer,
        "medianTotalFamilyIncome" = is.integer,
        "medianTotalHouseholdIncome" = is.integer,
        "medianTotalPersonalIncome" = is.integer)
+
+devtools::use_data(MEASURE_VARS, overwrite = TRUE)
+

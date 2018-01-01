@@ -2,10 +2,11 @@ Package: Census2016.spec
 Version: 0.0.0.9000
 Title: Ensures Census2016.DataPack Satisfy Specfication
 Depends: data.table
-Imports: utils
+Imports: utils, hutils
 Description: Ensures the packages Census2016.DataPack and friends satisfy the given specification.
 Authors@R: person("Hugh", "Parsonage", , "hugh.parsonage@gmail.com", c("aut", "cre"))
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
+RoxygenNote: 6.0.1
