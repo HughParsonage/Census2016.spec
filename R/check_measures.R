@@ -1,11 +1,16 @@
 #' Check measure columns
 #' @param dt A \code{data.table}.
-#' @importFrom hutils %notin%
 #' @export
 
-check_measures <- function(dt) {
+check_measures <- function(dt, show.progress = TRUE) {
   dt_noms <- copy(names(dt))
   measure_names <- dt_noms[-c(1, length(dt_noms))]
+
+  if (show.progress) {
+    msg <- base::cat
+  } else {
+    msg <- function(...) invisible(NULL)
+  }
 
   for (mnom in measure_names) {
     if (!mnom %chin% names(MEASURE_VARS)) {
@@ -28,23 +33,32 @@ check_measures <- function(dt) {
           if (!is.double(v)) {
             stop(mnom, " was not type double, as specified.")
           }
+        } else {
+          if (!identical(class(v), MEASURE_VAR$class)) {
+            stop(mnom, " did not have class ", MEASURE_VAR$class, " as specified.")
+          }
         }
-        cat(".")
+        msg(".")
 
-        if (!identical(class(v), MEASURE_VAR$class)) {
-          stop(mnom, " did not have class ", MEASURE_VAR$class, " as specified.")
+        if (identical(class(v), c("ordered", "factor"))) {
+          if (!startsWith(mnom, "Age")) {
+            if (!identical_levels(v, MEASURE_VAR$permitted_values)) {
+            stop(mnom, " was an ordered factor but the levels are not as specified.\n",
+                 "Levels:\n\t", levels(v), "\n",
+                 "Spec:\n\t", MEASURE_VAR$permitted_values)
+            }
+          }
+        } else {
+          if (any(v[!is.na(v)] %notin% MEASURE_VAR$permitted_values)) {
+            stop(mnom, " contained values not in specification.\n\t",
+                 paste0(unique(v[v %notin% MEASURE_VAR$permitted_values]),
+                        collapse = "\n\t"),
+                 "\n",
+                 "Permitted values were:\n\t",
+                 paste0(MEASURE_VAR$permitted_values, collapse = "\n\t"))
+          }
         }
-        cat(".")
-
-        if (any(v %notin% MEASURE_VAR$permitted_values)) {
-          stop(mnom, " contained values not in specification.\n\t",
-               paste0(unique(v[v %notin% MEASURE_VAR$permitted_values]),
-                      collapse = "\n\t"),
-               "\n",
-               "Permitted values were:\n\t",
-               paste0(MEASURE_VAR$permitted_values, collapse = "\n\t"))
-        }
-        cat(".")
+        msg(".")
       }
     }
   }
@@ -52,4 +66,22 @@ check_measures <- function(dt) {
 
 
 }
+
+identical_levels <- function(vx, y) {
+  x <- as.character(levels(vx))
+  y <- as.character(y)
+
+  if (length(x) != length(y)) {
+    if (anyNA(x) && !anyNA(y)) {
+      x <- x[!is.na(x)]
+    }
+    if (anyNA(y) && !anyNA(x)) {
+      y <- y[!is.na(y)]
+    }
+  }
+
+  length(x) == length(y) &&
+    all(x == y)
+}
+
 

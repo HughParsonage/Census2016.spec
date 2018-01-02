@@ -3,4 +3,3 @@
 export(check_colnames)
 export(check_measures)
 export(test_check)
-importFrom(hutils,"%notin%")

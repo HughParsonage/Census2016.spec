@@ -4,10 +4,12 @@
 \alias{test_check}
 \title{Test check}
 \usage{
-test_check(package)
+test_check(package, data_list = NULL, show.progress = TRUE)
 }
 \arguments{
 \item{package}{The package as a character vector to check.}
+
+\item{data_list}{Names list of data.tables to check.}
 }
 \description{
 Test check

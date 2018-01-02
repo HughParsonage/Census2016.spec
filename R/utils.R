@@ -22,3 +22,5 @@ list_data <- function(package, and_load = TRUE) {
   }
 }
 
+`%notin%` <- Negate("%in%")
+

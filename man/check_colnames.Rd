@@ -4,7 +4,7 @@
 \alias{check_colnames}
 \title{Check the column names of tables}
 \usage{
-check_colnames(data_list)
+check_colnames(data_list, show.progress = TRUE)
 }
 \arguments{
 \item{package}{Quoted name of the package to test.}

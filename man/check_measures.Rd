@@ -4,7 +4,7 @@
 \alias{check_measures}
 \title{Check measure columns}
 \usage{
-check_measures(dt)
+check_measures(dt, show.progress = TRUE)
 }
 \arguments{
 \item{dt}{A \code{data.table}.}
