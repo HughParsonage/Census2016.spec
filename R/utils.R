@@ -24,3 +24,19 @@ list_data <- function(package, and_load = TRUE) {
 
 `%notin%` <- Negate("%in%")
 
+gsub <- function(pattern, replacement, x, ignore.case = FALSE, perl = FALSE,
+                 fixed = FALSE, useBytes = FALSE)  {
+  base::gsub(pattern, replacement, x, ignore.case = ignore.case, perl = perl,
+             fixed = fixed, useBytes = useBytes)
+}
+
+sub <- function(pattern, replacement, x, ignore.case = FALSE, perl = FALSE,
+                 fixed = FALSE, useBytes = FALSE)  {
+  base::sub(pattern, replacement, x, ignore.case = ignore.case, perl = perl,
+             fixed = fixed, useBytes = useBytes)
+}
+
+grepl <- function(..., perl, fixed) base::grepl(..., perl = missing(fixed), fixed = !missing(fixed))
+
+
+
