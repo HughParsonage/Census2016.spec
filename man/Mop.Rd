@@ -6,7 +6,7 @@
 \usage{
 Mop(DT, value.name = getOption("Census2016.value.name", "persons"),
   suborder = NULL, dry.run = FALSE, totals = NULL, use.varI = TRUE,
-  verbose = FALSE)
+  verbose = FALSE, assign_into = getOption("Census.Mop.assign.env"))
 }
 \arguments{
 \item{DT}{A \code{data.table} that separated into the right variables.}
@@ -24,9 +24,11 @@ Mop(DT, value.name = getOption("Census2016.value.name", "persons"),
 calls to \code{fread[GTW]}.}
 
 \item{verbose}{Be chatty and report progress (for debugging)?}
+
+\item{assign_into}{The environment into which the result is to be assigned. Typically set to the global environment.}
 }
 \value{
-Called for its side-effect: assigning to the global environment.
+Called for its side-effect: assignment.
 }
 \description{
 Mop up a data pack file for inclusion a package

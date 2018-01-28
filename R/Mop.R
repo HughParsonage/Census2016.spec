@@ -8,10 +8,11 @@
 #' \code{varI}, the metadata entries, and these \code{varI} will be excluded from subsequent
 #' calls to \code{fread[GTW]}.
 #' @param verbose Be chatty and report progress (for debugging)?
-#' @return Called for its side-effect: assigning to the global environment.
+#' @param assign_into The environment into which the result is to be assigned. Typically set to the global environment.
+#' @return Called for its side-effect: assignment.
 #' @export
 
-Mop <- function(DT, value.name = getOption("Census2016.value.name", "persons"), suborder = NULL, dry.run = FALSE, totals = NULL, use.varI = TRUE, verbose = FALSE) {
+Mop <- function(DT, value.name = getOption("Census2016.value.name", "persons"), suborder = NULL, dry.run = FALSE, totals = NULL, use.varI = TRUE, verbose = FALSE, assign_into = getOption("Census.Mop.assign.env")) {
   stopifnot(is.data.table(DT),
             nrow(DT) > 0L,
             value.name %in% names(DT),
@@ -198,7 +199,7 @@ Mop <- function(DT, value.name = getOption("Census2016.value.name", "persons"), 
       varIused <<- sort(c(varIused, .varIused))
     }
 
-    assign(object_name, out, envir = .GlobalEnv)
+    assign(object_name, out, envir = assign_into)
   } else {
     cat("OK\n")
   }

@@ -5,7 +5,8 @@
 
   op <- options()
   op.Census2016spec <- list(
-    "Census2016.value.name" = "persons"
+    "Census2016.value.name" = "persons",
+    "Census.Mop.assign.env" = new.env()
   )
   toset <- !(names(op.Census2016spec) %in% names(op))
   if (any(toset)) options(op.Census2016spec[toset])

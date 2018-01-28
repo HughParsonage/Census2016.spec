@@ -4,7 +4,7 @@
 \name{MEASURE_VARS}
 \alias{MEASURE_VARS}
 \title{Data dictionary, specification}
-\format{An object of class \code{list} of length 96.}
+\format{An object of class \code{list} of length 100.}
 \usage{
 MEASURE_VARS
 }
