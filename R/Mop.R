@@ -21,7 +21,8 @@ Mop <- function(DT, value.name = getOption("Census2016.value.name", "persons"), 
             'MaxSchooling' %notin% names(DT))
 
   if ("Sex" %in% names(DT) &&
-      all(c("Persons", "Males", "Females") %chin% DT[["Sex"]])) {
+      OR(all(c("Persons", "Males", "Females") %chin% DT[["Sex"]]),
+         all(c("Persons", "Male", "Female") %chin% DT[["Sex"]]))) {
     Mop(DT[Sex != "Persons"][, Sex := substr(Sex, 0, 1)],
         value.name = value.name, suborder = suborder,
         dry.run = dry.run, totals = totals,
