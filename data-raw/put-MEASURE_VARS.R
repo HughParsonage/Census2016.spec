@@ -25,6 +25,7 @@ metadatum_logical <- function(has_na) {
 }
 
 # Measure vars depends on itself; run twice.
+MEASURE_VARS <- NULL
 for (i in 1:2)
 MEASURE_VARS <-
   list("Address1YearAgo" = function(x) is.character(x),
@@ -172,8 +173,7 @@ MEASURE_VARS <-
                                                                 19200L, 21600L, 24000L, 26400L, 28800L, 31200L, 36000L, 48000L,
                                                                 60000L)),
        "MotherBornAus" = metadatum_logical(),
-       "MotherLabourForceStatus" = metadatum(class = "character",
-                                             permitted_values = MEASURE_VARS$LabourForceStatus$permitted_values),
+
        "MotorVehicles.min" = metadatum(class = "integer",
                                        permitted_values = c(NA, 0L, 1L, 2L, 3L, 4L)),
        "NeedsAssistance" = metadatum_logical(NA),
@@ -249,6 +249,8 @@ MEASURE_VARS <-
                                                      "Unemployed (looking for full-time work)",
                                                      "Unemployed (looking for part-time work)",
                                                      "Unemployed (looking for work)" )),
+       LabourForceStatusFather = metadatum(class = "character", permitted_values = MEASURE_VARS$LabourForceStatus$permitted_values),
+       LabourForceStatusMother = metadatum(class = "character", permitted_values = MEASURE_VARS$LabourForceStatus$permitted_values),
        LabourForceStatusParent1 = MEASURE_VARS$LabourForceStatus,
        LabourForceStatusParent2 = MEASURE_VARS$LabourForceStatus,
        NonSchoolQualification = list(class = c("ordered",
