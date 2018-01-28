@@ -38,5 +38,5 @@ sub <- function(pattern, replacement, x, ignore.case = FALSE, perl = FALSE,
 
 grepl <- function(..., perl, fixed) base::grepl(..., perl = missing(fixed), fixed = !missing(fixed))
 
-
+percent <- function(x) paste0(formatC(x, digits = 1, format = "f"), "%")
 

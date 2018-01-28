@@ -1,9 +1,12 @@
 Package: Census2016.spec
-Version: 0.0.1
+Version: 0.0.2
 Title: Ensures Census2016.DataPack Satisfy Specfication
-Depends: data.table
+Depends: 
+  R (>= 3.3.0),
+  data.table
 Imports: 
   utils,
+  crayon,
   stats,
   hutils,
   magrittr

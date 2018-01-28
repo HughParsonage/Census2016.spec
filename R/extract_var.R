@@ -1,6 +1,7 @@
 #' Extract arbitrary variable from data pack
 #' @param DT A molten version of the raw data pack files.
 #' @param var A string, one of the names \code{MEASURE_VARS}, the variable to be extracted.
+#' @param ... Passed to \code{zmatch}.
 #' @export extract_var
 
 extract_var <- function(DT, var, ...) {

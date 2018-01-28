@@ -10,6 +10,8 @@ extract_var(DT, var, ...)
 \item{DT}{A molten version of the raw data pack files.}
 
 \item{var}{A string, one of the names \code{MEASURE_VARS}, the variable to be extracted.}
+
+\item{...}{Passed to \code{zmatch}.}
 }
 \description{
 Extract arbitrary variable from data pack

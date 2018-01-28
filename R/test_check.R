@@ -1,6 +1,7 @@
 #' Test check
 #' @param package The package as a character vector to check.
 #' @param data_list Names list of data.tables to check.
+#' @param show.progress Be fun and show a progress bar?
 #' @export
 
 test_check <- function(package, data_list = NULL, show.progress = TRUE) {

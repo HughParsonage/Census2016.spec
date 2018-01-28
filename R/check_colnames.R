@@ -1,6 +1,7 @@
 #' Check the column names of tables
-#' @param package Quoted name of the package to test.
-#'
+#' @param data_list A list of \code{data.tables} to check, or if a string, the name of a package
+#' whose data will be checked.
+#' @param show.progress Be fun and show a progress bar?
 #' @export
 
 check_colnames <- function(data_list, show.progress = TRUE) {

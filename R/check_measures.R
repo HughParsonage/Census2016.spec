@@ -1,5 +1,6 @@
 #' Check measure columns
 #' @param dt A \code{data.table}.
+#' @param show.progress Be fun and show a progress bar?
 #' @export
 
 check_measures <- function(dt, show.progress = TRUE) {

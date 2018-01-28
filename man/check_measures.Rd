@@ -8,6 +8,8 @@ check_measures(dt, show.progress = TRUE)
 }
 \arguments{
 \item{dt}{A \code{data.table}.}
+
+\item{show.progress}{Be fun and show a progress bar?}
 }
 \description{
 Check measure columns

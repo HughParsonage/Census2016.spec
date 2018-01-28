@@ -27,7 +27,9 @@ metadatum_logical <- function(has_na) {
 
 
 MEASURE_VARS <-
-  list("Age" = metadatum(class = c("ordered", "factor"),
+  list("Address1YearAgo" = function(x) is.character(x),
+       "Address5YearsAgo" = function(x) is.character(x),
+       "Age" = metadatum(class = c("ordered", "factor"),
                          permitted_values = c("0-4", "5-14",
                                               "0-14",
                                               "15-19", "20-24",

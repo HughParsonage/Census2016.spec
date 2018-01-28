@@ -7,7 +7,10 @@
 check_colnames(data_list, show.progress = TRUE)
 }
 \arguments{
-\item{package}{Quoted name of the package to test.}
+\item{data_list}{A list of \code{data.tables} to check, or if a string, the name of a package
+whose data will be checked.}
+
+\item{show.progress}{Be fun and show a progress bar?}
 }
 \description{
 Check the column names of tables

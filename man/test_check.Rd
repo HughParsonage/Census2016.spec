@@ -10,6 +10,8 @@ test_check(package, data_list = NULL, show.progress = TRUE)
 \item{package}{The package as a character vector to check.}
 
 \item{data_list}{Names list of data.tables to check.}
+
+\item{show.progress}{Be fun and show a progress bar?}
 }
 \description{
 Test check

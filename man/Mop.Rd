@@ -23,7 +23,7 @@ Mop(DT, value.name = getOption("Census2016.value.name", "persons"),
 \code{varI}, the metadata entries, and these \code{varI} will be excluded from subsequent
 calls to \code{fread[GTW]}.}
 
-\item{\code{verbose}}{Be chatty and report progress (for debugging)?}
+\item{verbose}{Be chatty and report progress (for debugging)?}
 }
 \value{
 Called for its side-effect: assigning to the global environment.

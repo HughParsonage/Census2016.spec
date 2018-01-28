@@ -7,7 +7,7 @@
 #' @param use.varI (logical) If \code{TRUE}, the default, \code{DT} must contain a column
 #' \code{varI}, the metadata entries, and these \code{varI} will be excluded from subsequent
 #' calls to \code{fread[GTW]}.
-#' @param \code{verbose} Be chatty and report progress (for debugging)?
+#' @param verbose Be chatty and report progress (for debugging)?
 #' @return Called for its side-effect: assigning to the global environment.
 #' @export
 
@@ -15,7 +15,7 @@ Mop <- function(DT, value.name = getOption("Census2016.value.name", "persons"), 
   stopifnot(is.data.table(DT),
             nrow(DT) > 0L,
             value.name %in% names(DT),
-            hutils::implies(use.varI, "varI" %in% names(DT)),
+            hutils::implies(use.varI, "varI" %chin% names(DT)),
             # Should be Completed
             'MaxSchooling' %notin% names(DT))
 
@@ -23,10 +23,14 @@ Mop <- function(DT, value.name = getOption("Census2016.value.name", "persons"), 
       all(c("Persons", "Males", "Females") %chin% DT[["Sex"]])) {
     Mop(DT[Sex != "Persons"][, Sex := substr(Sex, 0, 1)],
         value.name = value.name, suborder = suborder,
-        dry.run = dry.run, totals = totals, verbose = verbose)
+        dry.run = dry.run, totals = totals,
+        use.varI = use.varI,
+        verbose = verbose)
     Mop(DT[Sex == "Persons"][, Sex := NULL],
         value.name = value.name, suborder = suborder,
-        dry.run = dry.run, totals = totals, verbose = verbose)
+        dry.run = dry.run, totals = totals,
+        use.varI = use.varI,
+        verbose = verbose)
     return(invisible(NULL))
   }
 
@@ -140,7 +144,7 @@ Mop <- function(DT, value.name = getOption("Census2016.value.name", "persons"), 
                             err_r := paste0(if_else(.subset2(cf_population, value.name) < ApparentPopulation,
                                                     "+",
                                                     "-"),
-                                            scales::percent(abs(err_r)))]),
+                                            percent(abs(err_r)))]),
         error = function(e) NULL)
       print(out)
       stop("Error too high. Working population too high / low.")
@@ -165,7 +169,9 @@ Mop <- function(DT, value.name = getOption("Census2016.value.name", "persons"), 
   object_name <-
     paste0(Region,
            "__",
-           paste0(setdiff(out_noms, c(Region_key, value.name, "varI")),
+           paste0(setdiff(out_noms, c(Region_key,
+                                      "persons",
+                                      "varI")),
                   collapse = "_"))
 
   if (object_name %in% ls(envir = .GlobalEnv)) {

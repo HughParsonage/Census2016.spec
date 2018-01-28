@@ -1,6 +1,6 @@
 .onLoad <- function(libname, pkgname) {
   if (getRversion() >= "2.15.0") {
-    utils::globalVariables(c("varIused"), package = pkgname)
+    utils::globalVariables(c("varIused", ".", "Region_key", "Region"), package = pkgname)
   }
 
   op <- options()
