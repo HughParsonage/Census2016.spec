@@ -99,8 +99,10 @@ Mop <- function(DT, value.name = getOption("Census2016.value.name", "persons"), 
   }
 
 
-  for (j in names(out)) {
-    out[out[[j]] == "Other", (j) := "(Other)"]
+  if (substr(names(out)[1], 0, 3) != "SA1") {
+    for (j in names(out)) {
+      out[which(.subset2(out, j) == "Other"), (j) := "(Other)"]
+    }
   }
 
   if (is.data.table(totals)) {
@@ -180,13 +182,15 @@ Mop <- function(DT, value.name = getOption("Census2016.value.name", "persons"), 
     stop("`", object_name, "` already defined.")
   }
 
-  decoded_out <- decodeRegion(out)
+  decoded_out <- if (Region %chin% c("SA1", "POA")) out else decodeRegion(out)
   if (!anyDuplicated(decoded_out,
                      by = setdiff(names(decoded_out), value.name))) {
     out <- decoded_out
   } else {
     cat("\n\n\n\n\n")
-    print(duplicated_rows(decoded_out, by = setdiff(names(decoded_out), value.name)))
+    print(duplicated_rows(decoded_out,
+                          by = setdiff(names(decoded_out),
+                                       value.name)))
     cat("\n\n\n\n\n")
   }
 
@@ -204,6 +208,10 @@ Mop <- function(DT, value.name = getOption("Census2016.value.name", "persons"), 
   } else {
     cat("OK\n")
   }
-  if (exists("in_for_loop")) cat("=")
+  if (exists("in_for_loop") &&
+      exists("i_for_loop")) {
+    i_for_loop <<- i_for_loop + 1L
+    cat(rep_len("=", i_for_loop), object_name, "\r", sep = "")
+  }
   decoded_out[]
 }

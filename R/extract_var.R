@@ -28,26 +28,41 @@ zmatch <- function(x, y,
                    extract1 = "^(.*)$",
                    delete.penalty = 0.01,
                    sub.penalty = 0.2,
-                   y.complete = TRUE) {
-  x <- sub(extract1, "\\1", x, perl = TRUE)
-  Y <- gsub("[^A-Za-z]+", "_", y)
-  distance_matrix <-
-    adist(x, Y,
-          costs = list(deletions = delete.penalty,
-                       substitutions = sub.penalty))
+                   y.complete = TRUE,
+                   fixed = FALSE,
+                   ignore.case = FALSE) {
+  if (anyDuplicated(x)) {
+    input <- data.table(x = x)
+    decoder <-
+      unique(input, by = "x")[, out := zmatch(x, y,
+                                              extract1 = extract1,
+                                              delete.penalty = delete.penalty,
+                                              sub.penalty = sub.penalty,
+                                              y.complete = y.complete,
+                                              fixed = fixed,
+                                              ignore.case = ignore.case)]
+    return(decoder[input, on = "x"][["out"]])
+  } else {
+    x <- sub(extract1, "\\1", x, perl = TRUE)
+    Y <- gsub("[^A-Za-z]+", "_", y)
+    distance_matrix <-
+      adist(x, Y,
+            costs = list(deletions = delete.penalty,
+                         substitutions = sub.penalty))
 
-  indexes <- apply(distance_matrix, 1, which.min)
-  out <- y[indexes]
-  if (y.complete && any(y[!is.na(y)] %notin% out)) {
-    x <- x[!is.na(x)]
-    y <- y[!is.na(y)]
+    indexes <- apply(distance_matrix, 1, which.min)
+    out <- y[indexes]
+    if (y.complete && any(y[!is.na(y)] %notin% out)) {
+      x <- x[!is.na(x)]
+      y <- y[!is.na(y)]
 
-    unmatched_x <- x[x %notin% y]
-    stop("Not all y were matched.\n\t",
-         paste0(unique(y[y %notin% out]), sep = "\n\t"))
+      unmatched_x <- x[x %notin% y]
+      stop("Not all y were matched.\n\t",
+           paste0(unique(y[y %notin% out]), sep = "\n\t"))
+    }
+
+    out
   }
-
-  out
 }
 
 
