@@ -211,7 +211,14 @@ Mop <- function(DT, value.name = getOption("Census2016.value.name", "persons"), 
   if (exists("in_for_loop") &&
       exists("i_for_loop")) {
     i_for_loop <<- i_for_loop + 1L
-    cat(rep_len("=", i_for_loop), object_name, "\r", sep = "")
+    cat_object_name <-
+      paste0(Region,
+             "__",
+             paste0(setdiff(out_noms, c(Region_key, value.name,
+                                        "persons",
+                                        "varI")),
+                    collapse = "_"))
+    cat(rep_len("=", i_for_loop), cat_object_name, "\r", sep = "")
   }
   decoded_out[]
 }
