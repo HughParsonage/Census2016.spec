@@ -27,39 +27,46 @@ check_measures <- function(dt, show.progress = TRUE) {
       }
     } else {
       if (is.list(MEASURE_VAR)) {
-        if (!all(c("class", "permitted_values") %in% names(MEASURE_VAR))) {
-          stop("MEASURE VARS did not have class, permitted_values. ", names(MEASURE_VAR))
-        }
-        if (identical(MEASURE_VAR$class, "double")) {
-          if (!is.double(v)) {
-            stop(mnom, " was not type double, as specified.")
+        if ("f" %chin% names(MEASURE_VAR)) {
+          f_MEASURE_VAR <- match.fun(MEASURE_VAR[["f"]])
+          if (!f_MEASURE_VAR(v)) {
+            stop(mnom, " did not satisfy ", (MEASURE_VARS[names(MEASURE_VARS) == mnom]))
           }
         } else {
-          if (!identical(class(v), MEASURE_VAR$class)) {
-            stop(mnom, " did not have class ", MEASURE_VAR$class, " as specified.")
+          if (!all(c("class", "permitted_values") %in% names(MEASURE_VAR))) {
+            stop("MEASURE VARS did not have class, permitted_values. ", names(MEASURE_VAR))
           }
-        }
-        msg(".")
-
-        if (identical(class(v), c("ordered", "factor"))) {
-          if (!startsWith(mnom, "Age")) {
-            if (!identical_levels(v, MEASURE_VAR$permitted_values)) {
-            stop(mnom, " was an ordered factor but the levels are not as specified.\n",
-                 "Levels:\n\t", levels(v), "\n",
-                 "Spec:\n\t", MEASURE_VAR$permitted_values)
+          if (identical(MEASURE_VAR$class, "double")) {
+            if (!is.double(v)) {
+              stop(mnom, " was not type double, as specified.")
+            }
+          } else {
+            if (!identical(class(v), MEASURE_VAR$class)) {
+              stop(mnom, " did not have class ", MEASURE_VAR$class, " as specified.")
             }
           }
-        } else {
-          if (any(v[!is.na(v)] %notin% MEASURE_VAR$permitted_values)) {
-            stop(mnom, " contained values not in specification.\n\t",
-                 paste0(unique(v[v %notin% MEASURE_VAR$permitted_values]),
-                        collapse = "\n\t"),
-                 "\n",
-                 "Permitted values were:\n\t",
-                 paste0(MEASURE_VAR$permitted_values, collapse = "\n\t"))
+          msg(".")
+
+          if (identical(class(v), c("ordered", "factor"))) {
+            if (!startsWith(mnom, "Age")) {
+              if (!identical_levels(v, MEASURE_VAR$permitted_values)) {
+                stop(mnom, " was an ordered factor but the levels are not as specified.\n",
+                     "Levels:\n\t", levels(v), "\n",
+                     "Spec:\n\t", MEASURE_VAR$permitted_values)
+              }
+            }
+          } else {
+            if (any(v[!is.na(v)] %notin% MEASURE_VAR$permitted_values)) {
+              stop(mnom, " contained values not in specification.\n\t",
+                   paste0(unique(v[v %notin% MEASURE_VAR$permitted_values]),
+                          collapse = "\n\t"),
+                   "\n",
+                   "Permitted values were:\n\t",
+                   paste0(MEASURE_VAR$permitted_values, collapse = "\n\t"))
+            }
           }
+          msg(".")
         }
-        msg(".")
       }
     }
   }
