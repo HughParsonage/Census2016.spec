@@ -255,7 +255,8 @@ MEASURE_VARS <-
                                                             1991L,
                                                             1995L,
                                                             2000L, 2005L, 2010L,
-                                                            2011L, 2012L, 2013L, 2014L, 2015L, 2016L),
+                                                            2011L, 2012L, 2013L, 2014L, 2015L, 2016L,
+                                                            2017:2021),
                                        q = 13),
        "medianMortgageRepayment" = list(f = is.integer,
                                         q = 58),
@@ -570,5 +571,5 @@ MEASURE_VARS <-
                                      q = 38))
 
 
-devtools::use_data(MEASURE_VARS, overwrite = TRUE)
+usethis::use_data(MEASURE_VARS, overwrite = TRUE)
 
