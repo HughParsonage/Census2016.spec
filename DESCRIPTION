@@ -16,6 +16,6 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
-RoxygenNote: 6.0.1
+RoxygenNote: 7.2.0
 Suggests: 
     testthat

@@ -4,9 +4,16 @@
 \alias{Mop}
 \title{Mop up a data pack file for inclusion a package}
 \usage{
-Mop(DT, value.name = getOption("Census2016.value.name", "persons"),
-  suborder = NULL, dry.run = FALSE, totals = NULL, use.varI = TRUE,
-  verbose = FALSE, assign_into = getOption("Census.Mop.assign.env"))
+Mop(
+  DT,
+  value.name = getOption("Census2016.value.name", "persons"),
+  suborder = NULL,
+  dry.run = FALSE,
+  totals = NULL,
+  use.varI = TRUE,
+  verbose = FALSE,
+  assign_into = getOption("Census.Mop.assign.env")
+)
 }
 \arguments{
 \item{DT}{A \code{data.table} that separated into the right variables.}

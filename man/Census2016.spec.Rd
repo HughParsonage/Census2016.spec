@@ -4,10 +4,9 @@
 \name{Census2016.spec}
 \alias{Census2016.spec}
 \alias{Census2016.spec-package}
-\alias{Census2016.spec-package}
 \title{Census2016 specification}
 \description{
-Census2016 specification
+Ensures the packages Census2016.DataPack and friends satisfy the given specification.
 }
 \author{
 \strong{Maintainer}: Hugh Parsonage \email{hugh.parsonage@gmail.com}
