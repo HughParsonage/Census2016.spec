@@ -35,6 +35,7 @@ check_colnames <- function(data_list, show.progress = TRUE) {
           paste0(c("CED", "SED", "LGA", "STE", "SSC", paste0("SA", 2:4)), "_NAME16"),
           paste0(c("POA"), "_CODE_2016")),
         c("SA1_7DIGITCODE_2021",
+          "GCCSA_NAME21",
           "SA1_CODE_2021",
           "SA1_internal_2021",
           paste0(c("CED", "SED", "LGA", "STE", "SSC", paste0("SA", 2:4)), "_NAME21"),
